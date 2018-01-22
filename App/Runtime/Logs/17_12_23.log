@@ -1,0 +1,12 @@
+[ 2017-12-23T14:49:07+08:00 ] 0.0.0.0 /shop1/index.php?s=/admin/index/index.html
+ERR: 表达式错误:lgt
+
+[ 2017-12-23T15:24:01+08:00 ] 0.0.0.0 /shop1/index.php?s=/$vo.name/$vo1.name/$vo2.name.html
+ERR: 无法加载模块:$vo.name
+
+[ 2017-12-23T15:29:51+08:00 ] 0.0.0.0 /shop1/index.php?s=/admin/user/addUser.html
+ERR: 非法操作:adduser
+
+[ 2017-12-23T15:30:04+08:00 ] 0.0.0.0 /shop1/index.php?s=/admin/user/addUser.html
+ERR: 非法操作:adduser
+

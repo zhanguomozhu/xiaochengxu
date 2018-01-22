@@ -1,0 +1,43 @@
+<div class="page-sidebar" id="sidebar">
+    <!-- Page Sidebar Header-->
+    <div class="sidebar-header-wrapper">
+        <input class="searchinput" type="text">
+        <i class="searchicon fa fa-search"></i>
+        <div class="searchhelper">xxxx</div>
+    </div>
+    <!-- /Page Sidebar Header -->
+    <!-- Sidebar Menu -->
+    <ul class="nav sidebar-menu">
+
+        <foreach name='nodeList' item='vo'>
+        <if condition="in_array($vo['id'],$roleList) && !in_array($vo['name'],$notModel)">
+            <foreach name='vo["child"]' item='vo1'>
+            <if condition="in_array($vo1['id'],$roleList) && !in_array($vo1['name'],$notController)">
+                <?php $controllerUrl = $vo['name'].'/'.$vo1['name'].'/index'; ?>
+                <li>
+                    <a href='{:U("$controllerUrl")}' class="menu-dropdown">
+                        <i class="menu-icon fa fa-arrows"></i>
+                        <span class="menu-text">{$vo1.title}</span>
+                        <i class="menu-expand"></i>
+                    </a>
+                    <ul class="submenu">
+                        <foreach name='vo1["child"]' item='vo2'>
+                        <if condition="in_array($vo2['id'],$roleList) && !in_array($vo2['name'],$notAction)">
+                            <?php $actionUrl = $vo['name'].'/'.$vo1['name'].'/'.$vo2['name']; ?>
+                            <li>
+                                <a href='{:U("$actionUrl")}'>
+                                    <span class="menu-text">{$vo2.title}</span>
+                                    <i class="menu-expand"></i>
+                                </a>
+                            </li>
+                        </if>
+                        </foreach>
+                    </ul>
+                </li>
+            </if>
+            </foreach>
+        </if>
+        </foreach>
+    </ul>
+    <!-- /Sidebar Menu -->
+</div>

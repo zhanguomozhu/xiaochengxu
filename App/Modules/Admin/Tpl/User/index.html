@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html><head>
+	    <meta charset="utf-8">
+    <title>用户列表</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__PUBLIC__/style/bootstrap.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/font-awesome.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__PUBLIC__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__PUBLIC__/style/demo.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/typicons.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/animate.css" rel="stylesheet">
+</head>
+<body>
+	<!-- 头部 -->
+    <include file="Public:top" />
+	<!-- /头部 -->
+	
+	<div class="main-container container-fluid">
+		<div class="page-container">
+			<!-- Page Sidebar -->
+            <include file="Public:left" />
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="{:U('Admin/Index/index')}">系统</a>
+                        </li>
+                        <li class="active">
+                            <a href="{:U('Admin/User/index')}">用户列表</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+                    
+<button type="button" tooltip="添加用户" class="btn btn-sm btn-azure btn-addon" onClick="javascript:window.location.href = '{:U('Admin/User/add')}'"> <i class="fa fa-plus"></i> 添加用户
+</button>
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-body">
+                <div class="flip-scroll">
+                    <form action="" method="post">
+                    <table class="table table-bordered table-hover">
+                        <thead class="ssss">
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">用户名称</th>
+                                <th class="text-center">所属角色</th>
+                                <th class="text-center">最后登录时间</th>
+                                <th class="text-center">最后登录IP</th>
+                                <th class="text-center">是否锁定</th>
+                                <th class="text-center">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <volist name='users' id='vo'>
+                            <tr>
+                                <td align="center" style="width: 10%;">{$vo.id}</td>
+                                <td align="center" style="width: 20%;">{$vo.username}</td>
+                                <td align="center" style="width: 10%;">
+                                    <if condition="$vo['username'] eq C('RBAC_SUPERADMIN')">
+                                        <a href="javascript:void(0);" class="btn btn-sm btn-success">超级管理员</a>
+                                    <else />
+                                        <volist name="vo['role']" id='v'>
+                                           <a href="javascript:void(0);" class="btn btn-sm btn-success">{$v.name}</a>
+                                        </volist>
+                                    </if>
+                                </td>
+                                <td align="center" style="width: 20%;">{$vo.logintime|date="Y-m-d H:i:s",###}</td>
+                                <td align="center" style="width: 10%;">{$vo.loginip}</td>
+                                <td align="center" style="width: 10%;">
+                                    {$vo.status|status=###,U('Admin/User/editStatus',array('id'=>$vo['id'],'status'=>###?0:1),'')}
+                                </td>
+                                <td align="center" style="width: 20%;">
+                                    <a href="{:U('Admin/User/edit',array('id'=>$vo['id']))}" class="btn btn-primary btn-sm shiny">
+                                        <i class="fa fa-edit"></i> 编辑
+                                    </a>
+                                    <a href="#" onClick="confirmJump('确实要删除吗', '{:U('Admin/User/del',array('id'=>$vo['id']))}')" class="btn btn-danger btn-sm shiny">
+                                        <i class="fa fa-trash-o"></i> 删除
+                                    </a>
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                    </form>
+                </div>
+                <div style="padding-top:10px;text-align: center;">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+		</div>	
+	</div>
+
+	    <!--Basic Scripts-->
+    <script src="__PUBLIC__/style/jquery_002.js"></script>
+    <script src="__PUBLIC__/style/bootstrap.js"></script>
+    <script src="__PUBLIC__/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__PUBLIC__/style/beyond.js"></script>
+    <script src="__PUBLIC__/style/bootbox.js"></script>
+
+    <script type="text/javascript">
+        
+    //confirm弹窗
+    function confirmJump(info,url){
+        bootbox.confirm(info, function (result) {
+            if (result) {
+                window.location.href = url;
+            }
+        });
+    }
+    </script>
+
+
+</body></html>

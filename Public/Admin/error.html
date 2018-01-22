@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>404</title>
+
+	<link rel="stylesheet" href="../../../Public/Css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../../Public/Css/animate.css">
+	<link rel="stylesheet" href="../../../Public/Css/style.css">
+</head>
+<script type="text/javascript">
+	window.onload= function(){
+		var i=4;
+		setInterval(function(){
+			if(i>0){
+				document.getElementById('tim').innerHTML = i--;
+			}
+			
+		},1000);
+		setTimeout(function(){
+			window.location.href = '<?php echo __APP__;?>';
+		},5000);
+	}
+</script>
+<body>
+	<div class="container fh5co-container">
+
+			<div class="row">
+				<div class="col-md-12 animate-box" data-animate-effect="fadeIn">
+					<div class="fh5co-404-wrap" id="video" data-vide-bg="../../../Public/Video/Crocodile" data-vide-options="position: 0 50%">
+						<div class="overlay"></div>
+					</div>
+				</div>
+				<div class="col-md-12 text-center fh5co-404-text animate-box"  data-animate-effect="fadeIn">
+					<h2><?php echo $e['message']; ?>,将在<span id='tim'>5</span>秒后自动跳转...</h2>
+					<p><a href="<?php echo __APP__;?>" class="btn btn-primary">返回首页</a></p>
+				</div>
+			</div>
+		
+		</div>
+	
+	<!-- jQuery -->
+	<script src="../../../Public/Js/jquery.min.js"></script>
+	<!-- Vide -->
+	<script src="../../../Public/Js/jquery.vide.min.js"></script>
+	
+</body>
+</html>

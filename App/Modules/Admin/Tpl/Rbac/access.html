@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html><head>
+	    <meta charset="utf-8">
+    <title>配置角色权限</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__PUBLIC__/style/bootstrap.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/font-awesome.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__PUBLIC__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__PUBLIC__/style/demo.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/typicons.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/animate.css" rel="stylesheet">
+
+
+</head>
+<body>
+	<!-- 头部 -->
+	<include file="Public:top" />
+	<!-- /头部 -->
+	
+	<div class="main-container container-fluid">
+		<div class="page-container">
+			<!-- Page Sidebar -->
+            <include file="Public:left" />
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                                        <li>
+                        <a href="{:U('Index/Index/index')}">系统</a>
+                    </li>
+                                        <li>
+                        <a href="{:U('Admin/Node/index')}">权限管理</a>
+                    </li>
+                    <li class="active">配置角色权限</li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+                
+                <!-- Page Body -->
+                <div class="page-body">
+                <button type="button" tooltip="返回" class="btn btn-sm btn-azure btn-addon" onClick="javascript:window.location.href = '{:U('Admin/Role/index')}'"> <i class="fa fa-reply"></i> 返回
+                </button>
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                        <div class="widget">
+                            <div class="widget-header bordered-bottom bordered-blue">
+                                <span class="widget-caption">配置角色权限</span>
+                            </div>
+                            <div class="widget-body">
+                                <div id="horizontal-form">
+                                    <form action="{:U('Admin/Rbac/access')}" method="post">
+
+                                        <div class="well">
+                                            <div class="dd dd-draghandle bordered">
+                                                <ol class="dd-list">
+                                                    <!-- 模块 -->
+                                                    <if condition="isset($node)">
+                                                    <volist name='node' id='vo'>
+                                                    <li class="dd-item dd2-item level1">
+                                                        <div class="dd-handle dd2-handle">
+                                                            <input type="checkbox" class="inverted" style="opacity:1;position: absolute;left: 9px;top: 6px;" name='access[]' value="{$vo.id}_{$vo.level}" level='{$vo.level}' <if condition="$vo.access eq 1">checked</if>>
+                                                        </div>
+                                                        <div class="dd2-content blue">{$vo.title}</div>
+
+                                                        <ol class="dd-list" style="">
+                                                            <!-- 控制器 -->
+                                                            <if condition="isset($vo['child'])">
+                                                            <volist name="vo['child']" id='v1'>
+                                                            <li class="dd-item dd2-item level2">
+                                                                <div class="dd-handle dd2-handle">
+                                                                    <input type="checkbox" class="inverted" style="opacity:1;position: absolute;left: 9px;top: 6px;" name='access[]' value="{$v1.id}_{$v1.level}" level='{$v1.level}' <if condition="$v1.access eq 1">checked</if>>
+                                                                </div>
+                                                                <div class="dd2-content darkpink">{$v1.title}</div>
+
+                                                                <ol class="dd-list">
+                                                                    <!-- 方法 -->
+                                                                    <if condition="isset($v1['child'])">
+                                                                    <volist name="v1['child']" id='v2'>
+                                                                    <li class="dd-item dd2-item level3">
+                                                                        <div class="dd-handle dd2-handle">
+                                                                            <input type="checkbox" class="inverted" style="opacity:1;position: absolute;left: 9px;top: 6px;" name='access[]' value="{$v2.id}_{$v2.level}" level='{$v2.level}' <if condition="$v2.access eq 1">checked</if>>
+                                                                        </div>
+                                                                        <div class="dd2-content">{$v2.title}</div>
+                                                                    </li>
+                                                                    </volist>
+                                                                    </if>
+                                                                </ol>
+
+                                                            </li>
+                                                            </volist>
+                                                            </if>
+                                                        </ol>
+
+                                                    </li>
+                                                    </volist>
+                                                    </if>
+                                                </ol>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="rid" value="{$rid}">
+                                        <button type="submit" class="btn btn-success">保存信息</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+		</div>	
+	</div>
+
+
+
+
+	    <!--Basic Scripts-->
+    <script src="__PUBLIC__/style/jquery_002.js"></script>
+    <script src="__PUBLIC__/style/bootstrap.js"></script>
+
+    <!--Beyond Scripts-->
+    <script src="__PUBLIC__/style/beyond.js"></script>
+    <!-- 拖拽 -->
+  
+
+      <script type="text/javascript">
+       $(function(){
+            //一级点击
+            $('input[level=1]').click(function(){
+                var inputs = $(this).parents('li').find('input');
+                $(this).prop('checked') ? inputs.prop('checked','checked') : inputs.removeAttr('checked');
+            })
+
+            //二级点击
+            $('input[level=2]').click(function(){
+                var inputs = $(this).parents('li .level2').find('input');
+                var inputs1 = $(this).parents('li').find('input[level=1]');//一级
+                console.log(inputs1);
+                $(this).prop('checked') ? (inputs.prop('checked','checked') && inputs1.prop('checked','checked')) : (inputs.removeAttr('checked'));
+            })
+
+            //三级点击
+            $('input[level=3]').click(function(){
+                var inputs1 = $(this).parents('li .level3').parents('li .level2').find('input[level=2]');//二级
+                var inputs2 = $(this).parents('li .level3').parents('li .level2').parents('li').find('input[level=1]');//一级
+                $(this).prop('checked') ? (inputs1.prop('checked','checked') && inputs2.prop('checked','checked')) : '';
+            })
+       })
+   </script>
+</body>
+</html>

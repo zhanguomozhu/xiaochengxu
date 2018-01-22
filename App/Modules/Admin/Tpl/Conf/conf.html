@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html><head>
+	    <meta charset="utf-8">
+    <title>网站配置列表</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__PUBLIC__/style/bootstrap.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/font-awesome.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__PUBLIC__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__PUBLIC__/style/demo.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/typicons.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/animate.css" rel="stylesheet">
+    <style type="text/css">
+        tr td{
+            vertical-align: middle!important;
+        }
+        tr th{
+            vertical-align: middle!important;
+        }
+    </style>
+</head>
+<body>
+	<!-- 头部 -->
+    <include file="Public:top" />
+	<!-- /头部 -->
+	
+	<div class="main-container container-fluid">
+		<div class="page-container">
+			<!-- Page Sidebar -->
+            <include file="Public:left" />
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="{:U('Admin/Index/index')}">系统</a>
+                        </li>
+                        <li class="active">系统配置</li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+                    
+<button type="button" tooltip="添加系统配置" class="btn btn-sm btn-azure btn-addon" onClick="javascript:window.location.href = '{:U('Admin/Conf/add')}'"> <i class="fa fa-plus"></i> 添加系统配置
+</button>
+<div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+        <div class="widget">
+            <div class="widget-body">
+                <div class="flip-scroll">
+                <form action="" method="post">
+                    <table class="table table-bordered table-hover">
+                        <thead class="">
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">排序</th>
+                                <th class="text-center">英文名称</th>
+                                <th class="text-center">中文名称</th>
+                                <th class="text-center">配置类型</th>
+                                <th class="text-center">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <volist name="confs" id="vo">
+                            <tr>
+                                <td align="center" style="width: 10%;">{$vo.id}</td>
+                                <td align="center" style="width: 10%;"> 
+                                    <input type="text" style="width: 50%;text-align: center;" name="{$vo.id}" value="{$vo.sort}">
+                                </td>
+                                <td align="center" style="width: 10%;">{$vo.enname}</td>
+                                <td align="center" style="width: 10%;">{$vo.cnname}</td>
+                                <td align="center" style="width: 10%;">{$vo.type|levelStyle=###,array('单行文本','多行文本','单选按钮','复选按钮','下拉菜单','上传按钮','未知类型')}
+                                </td>
+                                <td align="center" style="width: 20%;">
+                                    <a href="{:U('Admin/Conf/edit',array('id'=>$vo['id']))}" class="btn btn-primary btn-sm shiny">
+                                        <i class="fa fa-edit"></i> 编辑
+                                    </a>
+                                    <a href="#" onClick="confirmJump('确实要删除吗', '{:U('Admin/Conf/del',array('id'=>$vo['id']))}')" class="btn btn-danger btn-sm shiny">
+                                        <i class="fa fa-trash-o"></i> 删除
+                                    </a>
+                                </td>
+                            </tr>
+                       </volist>
+                          <tr>
+                                <td></td>
+                                <td style="text-align: center;">
+                                    <input type="submit" class="btn btn-primary btn-sm shiny" name="" value="排序">
+                                </td>
+                                <td colspan="5"></td>
+                            </tr>                        
+                        </tbody>
+                    </table>
+                     </form>
+                </div>
+                <div style="padding-top:10px;text-align: center;">
+            
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+		</div>	
+	</div>
+
+	    <!--Basic Scripts-->
+    <script src="__PUBLIC__/style/jquery_002.js"></script>
+    <script src="__PUBLIC__/style/bootstrap.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__PUBLIC__/style/beyond.js"></script>
+    <script src="__PUBLIC__/style/bootbox.js"></script>
+
+    <script type="text/javascript">
+        
+    //confirm弹窗
+    function confirmJump(info,url){
+        bootbox.confirm(info, function (result) {
+            if (result) {
+                window.location.href = url;
+            }
+        });
+    }
+    </script>
+
+
+</body></html>

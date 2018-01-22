@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html><head>
+	    <meta charset="utf-8">
+    <title>添加商品</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__PUBLIC__/style/bootstrap.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/font-awesome.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__PUBLIC__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__PUBLIC__/style/demo.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/typicons.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/animate.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <style type="text/css">
+        li{list-style-type:none;}
+    </style>
+</head>
+<body>
+	<!-- 头部 -->
+	<include file="Public:top" />
+	<!-- /头部 -->
+	
+	<div class="main-container container-fluid">
+		<div class="page-container">
+			<!-- Page Sidebar -->
+            <include file="Public:left" />
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                                        <li>
+                        <a href="{:U('Index/Index/index')}">系统</a>
+                    </li>
+                                        <li>
+                        <a href="{:U('Admin/Product/index')}">商品列表</a>
+                    </li>
+                    <li class="active">添加商品</li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+                    
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                        <div class="widget">
+                            <div class="widget-header bordered-bottom bordered-blue">
+                                <span class="widget-caption">添加商品</span>
+                            </div>
+                            <div class="widget-body">
+                                <div id="horizontal-form">
+                                    <form class="form-horizontal" role="form" action="{:U('Admin/Product/add')}" method="post">
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-2 control-label no-padding-right">所属分类</label>
+                                            <div class="col-sm-2">
+                                                <select name='cate_id'>
+                                                    <option value="0">顶级分类</option>
+                                                    <volist name='cate' id='vo'>
+                                                        <option value="{$vo.id}">{$vo.name}</option>
+                                                    </volist>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-4">
+                                            </div>
+                                            <p class="help-block col-sm-4 red">* 必填</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-2 control-label no-padding-right">商品名称</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" placeholder="最多120个字符" name="name" required="" type="text">
+                                            </div>
+                                            <p class="help-block col-sm-4 red">* 必填</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-2 control-label no-padding-right">商品类型</label>
+                                            <div class="col-sm-6">
+                                                <select name='type_id'>
+                                                    <option>请选择</option>
+                                                    <volist name='types' id='vo'>
+                                                        <option value="{$vo.id}">{$vo.type_name}</option>
+                                                    </volist>
+                                                </select>
+                                            </div>
+                                            <p class="help-block col-sm-4 red">* 必填</p>
+                                        </div>
+
+                                        <div class="form-group" id='attr_list' style="display: none;">
+                                            <label for="username" class="col-sm-2 control-label no-padding-right">属性选择</label>
+                                            <div class="col-sm-6">
+                                                <ul style="border: 1px solid #e6e6e6;padding: 3px 0px;"></ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-2 control-label no-padding-right">原价</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" placeholder="格式0.00" name="yuan_price" required="" type="text">
+                                            </div>
+                                            <p class="help-block col-sm-4 red">* 必填</p>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-2 control-label no-padding-right">回馈价</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" placeholder="格式0.00" name="xian_price" required="" type="text">
+                                            </div>
+                                            <p class="help-block col-sm-4 red">* 必填</p>
+                                        </div>
+
+
+                                       <!--  <div class="form-group">
+                                           <label for="username" class="col-sm-2 control-label no-padding-right">库存</label>
+                                           <div class="col-sm-6">
+                                               <input class="form-control" placeholder="" name="num" required="" type="text">
+                                           </div>
+                                           <p class="help-block col-sm-4 red">* 必填</p>
+                                       </div> -->
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-2 control-label no-padding-right">是否上架</label>
+                                            <div class="col-sm-2">
+                                                <select name='is_on'>
+                                                    <option value="1" selected>上架</option>
+                                                    <option value="0">下架</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-4">
+                                            </div>
+                                            <p class="help-block col-sm-4 red">* 必填</p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-2 control-label no-padding-right">商品图片</label>
+                                            <div class="col-sm-6">
+                                               <webuploader baseUrl='__PUBLIC__/Other/webuploader-0.1.5' name="image" url="{:U('Admin/Product/ajax_upload')}" word="或将照片拖到这里，最多可选5张,默认第一张为封面图"/>
+                                            </div>
+                                            <p class="help-block col-sm-4 red">* 必填</p>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-2 control-label no-padding-right">商品描述</label>
+                                            <div class="col-sm-6">
+                                               <ueditor baseUrl='__PUBLIC__/Other/ueditor' id='des' name='description' height='300' width="100%"/>
+                                           </div>
+                                            <p class="help-block col-sm-4 red">* 必填</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <button type="submit" class="btn btn-success">保存信息</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+		</div>	
+	</div>
+
+    <script src="__PUBLIC__/style/bootstrap.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__PUBLIC__/style/beyond.js"></script>
+    <script type="text/javascript">
+        $('select[name=type_id]').change(function(){
+            //获取选择的类型id
+            var typeId = $(this).val();
+            //ajax请求类型属性数据
+            $.ajax({
+                type:'post',
+                url:"{:U('Admin/Product/ajaxGetAttr')}",
+                data:{'type_id':typeId},
+                dataType:'json',
+                success:function(res){
+                    console.log(res)
+                    //循环属性
+                    var li = '';
+                    $(res).each(function(k,v){
+
+                        li += '<li class="tab-purple" style="margin:3px 0px;">';
+                        //如果是可选,
+                        if(v.attr_type == '可选'){
+                            console.log(v.attr_option_values)
+                            li += '<a href="javascript:void(0);" onClick="addNewAttr(this)">（<i type="+" class="fa fa-plus-circle"></i>）</a>'+v.attr_name + '：';
+                        }else{
+                            li += '<a href="javascript:void(0);">（<i type="+" class="fa fa-edit"></i>）</a>'+v.attr_name + '：';
+                        }
+                        //属性可选值，有下拉框，无文本框
+                        if(!v.attr_option_values || v.attr_option_values==''){
+                            li += '<input style="height:34px;" type="text" name="attr_value['+v.id+'][]" />';
+                        }else{
+                            li += '<select name="attr_value['+v.id+'][]"><option value="">请选择</option>';
+                            //把可选值转换成数组
+                            var _attr = v.attr_option_values.split(',');
+                            //循环
+                            for(var i=0;i<_attr.length;i++){
+                                li += '<option value="'+_attr[i]+'">';
+                                li += _attr[i];
+                                li += '</option>';
+                            }
+                            li += '</select>';
+                        }
+                        
+                        li += '</li>';
+                    });
+                    //插入节点
+                    $("#attr_list").css('display','block');
+                    $("#attr_list ul").html(li);
+                }
+            })
+        })
+
+
+        //点击添加节点
+        function addNewAttr(a){
+            var li = $(a).parent();
+            var newLi = li.clone();
+            if(li.find('i').attr('type') == '+'){
+                //加号变减号
+                newLi.find('i').removeClass('fa-plus-circle').addClass('fa-minus-circle').attr('type','-')
+
+                li.after(newLi);
+            }else{
+                li.remove();
+            }
+            
+        }
+    </script>
+</body></html>

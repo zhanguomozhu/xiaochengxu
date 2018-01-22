@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html><head>
+        <meta charset="utf-8">
+    <title>商品列表</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__PUBLIC__/style/bootstrap.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/font-awesome.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__PUBLIC__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__PUBLIC__/style/demo.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/typicons.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/animate.css" rel="stylesheet">
+    <link href="__PUBLIC__/Other/layui/css/layui.css" rel="stylesheet">
+    <link href="__PUBLIC__/Other/layui/css/modules/laydate/default/laydate.css" rel="stylesheet">
+    <style type="text/css">
+        tr td{
+            vertical-align: middle!important;
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <include file="Public:top" />
+    <!-- /头部 -->
+    
+    <div class="main-container container-fluid">
+        <div class="page-container">
+            <!-- Page Sidebar -->
+            <include file="Public:left" />
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="{:U('Admin/Index/index')}">系统</a>
+                        </li>
+                        <li class="active">
+                            <a href="{:U('Admin/Product/index')}">商品列表</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+                    
+<button type="button" tooltip="添加商品" class="btn btn-sm btn-azure btn-addon" onClick="javascript:window.location.href = '{:U('Admin/Product/add')}'"> <i class="fa fa-plus"></i> 添加商品
+</button>
+<div class="row">
+
+    <div class="col-lg-12 col-sm-12 col-xs-12">
+    
+        <div class="widget">
+            <div class="widget-body">
+            <!-- 搜索开始 -->
+                <div class="widget-body bordered-left bordered-warning">
+                    <form class="form-inline" role="form" action="__SELF__" method="post">
+                        <div class="form-group">
+                            <select name="cate_id">
+                                <option value="">所有分类</option>
+                                <volist name='cate' id='vo'>
+                                    <option value="{$vo.id}" <if condition="I('post.cate_id') eq $vo['id']">selected</if>>{$vo.name}</option>
+                                </volist>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select name="yuan_price">
+                                <option value="">原价</option>
+                                <option value="1" <if condition="I('post.yuan_price') eq 1">selected</if>>升序</option>
+                                <option value="2" <if condition="I('post.yuan_price') eq 2">selected</if>>降序</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select name="xian_price">
+                                <option value="">回馈价</option>
+                                <option value="1" <if condition="I('post.xian_price') eq 1">selected</if>>升序</option>
+                                <option value="2" <if condition="I('post.xian_price') eq 2">selected</if>>降序</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <select name="create_time">
+                                <option value="">创建时间</option>
+                                <option value="1" <if condition="I('post.create_time') eq 1">selected</if>>升序</option>
+                                <option value="2" <if condition="I('post.create_time') eq 2">selected</if>>降序</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <select name="is_on">
+                                <option value="">是否上架</option>
+                                <option value="1" <if condition="I('post.is_on') eq 1">selected</if>>上架</option>
+                                <option value="2" <if condition="I('post.is_on') eq 2">selected</if>>下架</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="开始时间" id="starttime" name="starttime" value="<if condition="I('post.starttime')">{:I('post.starttime')}</if>">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="结束时间" id="endtime" name="endtime" value="<if condition="I('post.endtime')">{:I('post.endtime')}</if>">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="起始价格,只能是数字" name="startprice" value="<if condition="I('post.startprice')">{:I('post.startprice')}</if>">
+                            <input type="text" class="form-control" placeholder="结束价格,只能是数字" name="endprice" value="<if condition="I('post.endprice')">{:I('post.endprice')}</if>">
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="form-group">
+                            <input type="text" class="form-control" size="50" placeholder="商品名称" name="name" value="<if condition="I('post.name')">{:I('post.name')}</if>">
+                        </div>
+                        <button type="submit" class="btn btn-success">搜索</button>
+                    </form>
+                </div>
+            <!-- 搜索结束 -->
+                <div class="flip-scroll">
+                    <form action="" method="post">
+                    <table class="table table-bordered table-hover">
+                        <thead class="ssss">
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">所属栏目</th>
+                                <th class="text-center">商品名称</th>
+                                <th class="text-center">商品封面</th>
+                                <th class="text-center">原价</th>
+                                <th class="text-center">回馈价</th>
+                                <th class="text-center">商品描述</th>
+                                <th class="text-center">是否上架</th>
+                                <th class="text-center">创建时间</th>
+                                <th class="text-center">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <volist name='products' id='vo'>
+                            <tr>
+                                <td align="center" style="width: 5%;">{$vo.id}</td>
+                                <td align="center" style="width: 5%;">{$vo.cate}</td>
+                                <td align="left" style="width: 20%;">{$vo.name|str_replace=I('post.name'),"<span style='color:red;'>".I('post.name')."</span>",###}</td>
+                                <td align="center" style="width: 10%;">
+                                    <if condition="$vo.image != false">
+                                    <volist name='vo.image' id='v'>
+                                        <if condition="$v.is_feng eq 1">
+                                            <img src="{$v.url}" width="50" height="50">
+                                        </if>
+                                    </volist>
+                                    <else />
+                                        暂无图片
+                                    </if>
+                                </td>
+                                <td align="center" style="width: 5%;">{$vo.yuan_price}</td>
+                                <td align="center" style="width: 5%;">{$vo.xian_price}</td>
+                               
+                                <td align="left" style="width: 20%;">{$vo.description|substr=###,0,30}</td>
+                                <td align="center" style="width: 5%;">
+                                {$vo.is_on|status=###,U('Admin/Product/editStatus',array('id'=>$vo['id'],'is_on'=>###?0:1),''),array('上架','下架')}
+                                </td>
+                                <td align="center" style="width: 10%;">{$vo.create_time|date="Y-m-d H:i:s",###}</td>
+                                <td align="center" style="width: 15%;">
+                                    <a href="{:U('Admin/Product/editStatus',array('id'=>$vo['id'],'is_del'=>$vo['is_del']?0:1))}" class="btn btn-primary btn-sm shiny">
+                                        <i class="fa fa-edit"></i> 还原
+                                    </a>
+                                    <a href="#" onClick="confirmJump('确实要删除吗', '{:U('Admin/Product/del',array('id'=>$vo['id']))}')" class="btn btn-danger btn-sm shiny">
+                                        <i class="fa fa-trash-o"></i>彻底删除
+                                    </a>
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                    </form>
+                </div>
+                <div style="padding-top:10px;text-align: center;">
+                    <div class="pagination">
+                        {$show}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+        </div>  
+    </div>
+
+        <!--Basic Scripts-->
+    <script src="__PUBLIC__/style/jquery_002.js"></script>
+    <script src="__PUBLIC__/style/bootstrap.js"></script>
+    <!--Beyond Scripts-->
+    
+    <script src="__PUBLIC__/style/beyond.js"></script>
+    <script src="__PUBLIC__/style/bootbox.js"></script>
+    
+
+    <script src="__PUBLIC__/Other/layui/layui.js"></script>
+    
+    <script>
+    layui.use('laydate', function(){
+          var laydate = layui.laydate;
+          
+          //开始时间
+          laydate.render({
+            elem: '#starttime'
+            ,type: 'datetime'
+            ,theme: 'grid'
+          });
+
+          //结束时间
+          laydate.render({
+            elem: '#endtime'
+            ,type: 'datetime'
+            ,theme: 'grid'
+          });
+      });
+    </script>
+    <script type="text/javascript">
+        
+    //confirm弹窗
+    function confirmJump(info,url){
+        bootbox.confirm(info, function (result) {
+            if (result) {
+                window.location.href = url;
+            }
+        });
+    }
+    </script>
+
+</body></html>

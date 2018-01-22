@@ -1,0 +1,9 @@
+<ul>
+	<li>测试组件助手</li>
+	<ul>
+		<foreach name="cate" item='vo'>
+			<a href="{:U('/cate/'.$vo['id'])}"><li>{$vo.name}</li></a>
+		</foreach>
+		
+	</ul>
+</ul>

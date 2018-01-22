@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html><head>
+	    <meta charset="utf-8">
+    <title>添加分类</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__PUBLIC__/style/bootstrap.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/font-awesome.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__PUBLIC__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__PUBLIC__/style/demo.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/typicons.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/animate.css" rel="stylesheet">
+    
+
+</head>
+<body>
+	<!-- 头部 -->
+	<include file="Public:top" />
+	<!-- /头部 -->
+	
+	<div class="main-container container-fluid">
+		<div class="page-container">
+			<!-- Page Sidebar -->
+            <include file="Public:left" />
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                                        <li>
+                        <a href="{:U('Index/Index/index')}">系统</a>
+                    </li>
+                                        <li>
+                        <a href="{:U('Admin/Cate/index')}">分类列表</a>
+                    </li>
+                    <li class="active">添加分类</li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+                    
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                        <div class="widget">
+                            <div class="widget-header bordered-bottom bordered-blue">
+                                <span class="widget-caption">添加分类</span>
+                            </div>
+                            <div class="widget-body">
+                                <div id="horizontal-form">
+                                    <form class="form-horizontal" role="form" action="{:U('Admin/Cate/add')}" method="post">
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-2 control-label no-padding-right">父级分类</label>
+                                            <div class="col-sm-3">
+                                                <select name='pid'>
+                                                    <option value="0">顶级分类</option>
+                                                    <volist name='cates' id='vo'>
+                                                        <option value="{$vo.id}">{$vo.name}</option>
+                                                    </volist>
+                                                </select>
+                                            </div>
+                                            <p class="help-block col-sm-4 red">* 必填</p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-2 control-label no-padding-right">分类名称</label>
+                                            <div class="col-sm-3">
+                                                <input class="form-control" placeholder="" name="name" required="" type="text">
+                                            </div>
+                                            <p class="help-block col-sm-4 red">* 必填</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-2 control-label no-padding-right">分类图片</label>
+                                            <div class="col-sm-3">
+                                                <input style="display:none;" id="file" onchange="upload(this)" name="imgs" type="file">
+                                                <input class="form-control" placeholder="上传后文件路径"  id="filepath" name="img" type="hidden" value="">
+                                                <a onClick="file_click()" class="btn btn-success">点击上传</a>
+                                            </div>
+                                            <p class="help-block col-sm-4 red">* 必填</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-2 control-label no-padding-right">预览图片</label>
+                                            <div class="col-sm-3">
+                                               <div style="width:100%;height:125px;border: 3px dashed #e6e6e6;padding: 5px 5px;" id='yulan'>
+                                               </div>
+                                            </div>
+                                            <p class="help-block col-sm-4 red">* 必填</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-2 control-label no-padding-right">是否开启</label>
+                                            <div class="col-sm-1" style="margin-top:5px;">
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input name="status" type="radio" checked="checked" value="1">
+                                                            <span class="text">开启</span>
+                                                        </label>
+                                                    </div>
+                                                    
+                                            </div>
+                                            <div class="col-sm-2" style="margin-top:5px;">
+                                                <div class="radio">
+                                                    <label>
+                                                        <input name="status" type="radio" value="0">
+                                                        <span class="text">关闭</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <p class="help-block col-sm-4 red">* 必填</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-2 control-label no-padding-right">分类简介</label>
+                                            <div class="col-sm-3">
+                                               <textarea class="form-control" rows="5" name='description'></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <button type="submit" class="btn btn-success">保存信息</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+		</div>	
+	</div>
+ <div id="modal-danger" class="modal modal-message modal-danger fade" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <i class="glyphicon glyphicon-fire"></i>
+                </div>
+                <div class="modal-title">Alert</div>
+
+                <div class="modal-body">You'vd done bad!</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+                </div>
+            </div> <!-- / .modal-content -->
+        </div> <!-- / .modal-dialog -->
+    </div>
+<!--Basic Scripts-->
+    <script src="__PUBLIC__/style/jquery_002.js"></script>
+    <script src="__PUBLIC__/style/bootstrap.js"></script>
+    <script src="__PUBLIC__/style/bootbox.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__PUBLIC__/style/beyond.js"></script>
+<script type="text/javascript">
+     //上传按钮点击事件
+        function file_click(){
+           $("#file").click();
+        }
+        //异步上传
+        function upload(eve) {
+            var obj = $(eve).parents("form");
+            uploadUrl = obj.attr("action");
+            $.ajax({
+                url: uploadUrl,
+                type: "POST",
+                cache: false,
+                data: new FormData(obj[0]),
+                dataType:"json",
+                processData: false,
+                contentType: false,
+                success:function(res){
+                    console.log(res);
+                    if(res.code == 1000){
+                        $("#filepath").val(res.data.path);
+                        var str = '<img src="'+res.data.path+'" width="100" height="100">';
+                        $('#yulan').append(str);
+                        bootbox.alert({
+                            message:"上传路径："+res.data.path,
+                            title: res.msg,
+                            className: "modal-danger",
+                        });
+                    }else{
+                        bootbox.alert({
+                            message:"上传错误："+res.data.path,
+                            title: res.msg,
+                            className: "modal-danger",
+                        });
+                    }
+                }
+            });
+        }
+</script>
+</body></html>

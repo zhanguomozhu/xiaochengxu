@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html><head>
+	    <meta charset="utf-8">
+    <title>编辑用户</title>
+
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link href="__PUBLIC__/style/bootstrap.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/font-awesome.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/weather-icons.css" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="__PUBLIC__/style/beyond.css" rel="stylesheet" type="text/css">
+    <link href="__PUBLIC__/style/demo.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/typicons.css" rel="stylesheet">
+    <link href="__PUBLIC__/style/animate.css" rel="stylesheet">
+    
+
+</head>
+<body>
+	<!-- 头部 -->
+	<include file="Public:top" />
+	<!-- /头部 -->
+	
+	<div class="main-container container-fluid">
+		<div class="page-container">
+			<!-- Page Sidebar -->
+            <include file="Public:left" />
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                                        <li>
+                        <a href="{:U('Index/Index/index')}">系统</a>
+                    </li>
+                                        <li>
+                        <a href="{:U('Admin/User/index')}">用户列表</a>
+                    </li>
+                    <li class="active">编辑用户</li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+
+                <!-- Page Body -->
+                <div class="page-body">
+                    
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                        <div class="widget">
+                            <div class="widget-header bordered-bottom bordered-blue">
+                                <span class="widget-caption">编辑用户</span>
+                            </div>
+                            <div class="widget-body">
+                                <div id="horizontal-form">
+                                    <form class="form-horizontal" role="form" action="{:U('Admin/User/edit')}" method="post">
+                                        <input type="hidden" name="id" id='id' value="{$user.id}">
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-2 control-label no-padding-right">用户名称</label>
+                                            <div class="col-sm-4">
+                                                <input class="form-control" placeholder="" name="username" required="" type="text" value="{$user.username}" disabled="disabled">
+                                            </div>
+                                            <p class="help-block col-sm-4 red">* 必填</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-2 control-label no-padding-right">原始密码</label>
+                                            <div class="col-sm-4">
+                                                <input class="form-control" placeholder="" id="yuan" required="" type="password" value="">
+                                            </div>
+                                            <p id='yuantext' class="help-block col-sm-4 red">* 必填</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="username" class="col-sm-2 control-label no-padding-right">新密码</label>
+                                            <div class="col-sm-4">
+                                                <input class="form-control" placeholder="" name="password" required="" type="password" value="">
+                                            </div>
+                                            <p class="help-block col-sm-4 red">* 必填</p>
+                                        </div>
+                                    <if condition="count($user['role']) neq 0">
+                                    <foreach name="user.role" item='v'>
+                                        <div class="form-group roles">
+                                            <label for="username" class="col-sm-2 control-label no-padding-right">所属角色</label>
+                                            <div class="col-sm-4">
+                                                <select name='role_id[]'>
+                                                        <foreach name="role" item='vo'>
+                                                            <option value="{$vo.id}" <if condition="$vo.id eq $v['id']">selected</if>>{$vo.name}</option>
+                                                        </foreach>
+                                                </select>
+                                            </div>
+                                            <!-- <div class="col-sm-5">
+                                                <span class="btn btn-success" id='add_role'>添加一个角色</span>
+                                            </div> -->
+                                            <p class="help-block col-sm-4 red">* 必填</p>
+                                        </div>
+                                    </foreach>
+                                    <else />
+                                        <div class="form-group roles">
+                                            <label for="username" class="col-sm-2 control-label no-padding-right">所属角色</label>
+                                            <div class="col-sm-4">
+                                                <select name='role_id[]'>
+                                                        <foreach name="role" item='vo'>
+                                                            <option value="{$vo.id}" <if condition="$vo.id eq $v['id']">selected</if>>{$vo.name}</option>
+                                                        </foreach>
+                                                </select>
+                                            </div>
+                                            <!-- <div class="col-sm-5">
+                                                <span class="btn btn-success" id='add_role'>添加一个角色</span>
+                                            </div> -->
+                                            <p class="help-block col-sm-4 red">* 必填</p>
+                                        </div>
+                                    </if>
+                                        <div class="form-group last">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <button id='but' type="submit" class="btn btn-success">保存信息</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+		</div>	
+	</div>
+
+	    <!--Basic Scripts-->
+    <script src="__PUBLIC__/style/jquery_002.js"></script>
+    <script src="__PUBLIC__/style/bootstrap.js"></script>
+    <script src="__PUBLIC__/style/jquery.js"></script>
+    <!--Beyond Scripts-->
+    <script src="__PUBLIC__/style/beyond.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            // $('#add_role').click(function(){
+            //     var obj = $(this).parents('div .roles').clone();
+            //     obj.find('#add_role').remove();
+            //     $('.last').before(obj);
+            // })
+            if($("#yuan").val() == false){
+                $("#but").attr('disabled',true);
+            }
+        })
+
+        //验证元密码
+        $("#yuan").blur(function(){
+            $.ajax({
+                type:'post',
+                url:'{:U("Admin/User/checkPs")}',
+                data:{id:$("#id").val(),ps:$("#yuan").val()},
+                dataType:'json',
+                success:function(res){
+                    console.log(res)
+                    if(res.code !== 1000){
+                        $("#but").attr('disabled',true);
+                    }else{
+                        $("#but").attr('disabled',false);
+                    }
+                    $("#yuantext").text(res.msg);
+                }
+            })
+        })
+    </script>
+
+</body></html>
